@@ -66,9 +66,6 @@ const DetailsPage = () => {
     const firstPokemonTypeName = firstPokemonType.type?.name;
     return getColors(firstPokemonTypeName);
   };
-  // #8ADC8E
-  // #FFDE6A
-  // #FF7B2D
 
   const returnColorBar = (value) => {
     if (value <= 50 && value >= 30) return "#FFDE6A";
