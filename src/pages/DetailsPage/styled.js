@@ -17,6 +17,10 @@ export const DetailsContent = styled.div`
   display: flex;
   margin: 56px auto;
   background-color: ${(props) => props.color};
+  position: relative;
+`;
+export const SpriteImg = styled.img`
+  width: 60%;
 `;
 
 export const SpriteContent = styled.div`
@@ -24,6 +28,9 @@ export const SpriteContent = styled.div`
   height: 282px;
   border-radius: 8px;
   background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 export const Sprites = styled.div`
   display: flex;
@@ -32,7 +39,7 @@ export const Sprites = styled.div`
   flex-wrap: wrap;
 `;
 
-export const Stats = styled.div`
+export const StatsContent = styled.div`
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -41,6 +48,38 @@ export const Stats = styled.div`
   flex-wrap: wrap;
   border-radius: 12px;
   margin-left: 35px;
+  padding: 20px;
+  font-size: 2rem;
+  row-gap: 10px;
+`;
+export const Stats = styled.div`
+  display: flex;
+  font-size: 0.8rem;
+  height: 1.3rem;
+`;
+export const StatsName = styled.span`
+  flex: 2.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: capitalize;
+`;
+export const StatsNumber = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+export const StatsBar = styled.div`
+  flex: 3;
+  display: flex;
+  align-items: center;
+`;
+export const Bar = styled.div`
+  background-color: ${(props) => props.color};
+  width: ${(props) => props.width};
+  border-radius: 10px;
+  height: 10px;
 `;
 
 export const RightContent = styled.div`
@@ -51,8 +90,24 @@ export const RightContent = styled.div`
   flex-direction: column;
 `;
 
+export const PokebalContent = styled.img`
+  position: absolute;
+  right: -120px;
+  top: -118px;
+  height: 900px;
+`;
+
+export const PokeImage = styled.img`
+  width: 350px;
+  position: absolute;
+  z-index: 2;
+  right: 20px;
+  top: -140px;
+`;
+
 export const Name = styled.span`
   font-size: 48px;
+  z-index: 2;
   &::first-letter {
     text-transform: uppercase;
   }
@@ -69,6 +124,7 @@ export const Type = styled.img`
   height: 32px;
   border: dotted 1px white;
   border-radius: 10px;
+  z-index: 2;
 `;
 
 export const Moves = styled.div`
@@ -83,6 +139,7 @@ export const Moves = styled.div`
   flex-direction: column;
   row-gap: 20px;
   overflow-y: auto;
+  z-index: 2;
 `;
 
 export const Move = styled.div`
