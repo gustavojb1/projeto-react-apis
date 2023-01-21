@@ -5,6 +5,7 @@ import { getTypes } from "../../utils/ReturnTypes";
 import Header from "../../components/Header/header";
 import { UserContext } from "../../context/GlobalContext";
 import { getColors } from "../../utils/ReturnCardColor";
+import pokebal from "../../img/pokebal.png";
 import {
   Detail,
   Content,
@@ -18,6 +19,14 @@ import {
   Type,
   Moves,
   Move,
+  PokebalContent,
+  PokeImage,
+  SpriteImg,
+  StatsContent,
+  StatsName,
+  StatsNumber,
+  StatsBar,
+  Bar,
 } from "./styled";
 
 const DetailsPage = () => {
@@ -26,6 +35,8 @@ const DetailsPage = () => {
   const location = useLocation();
   const [pokemonDetails, setPokemonDetails] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+
+  const stats = pokemonDetails?.stats ? pokemonDetails.stats : [];
 
   const pokemonName = location.pathname.substring(9, location.pathname.length);
   const pokemonSelected = pokemon.results?.filter(
@@ -55,6 +66,20 @@ const DetailsPage = () => {
     const firstPokemonTypeName = firstPokemonType.type?.name;
     return getColors(firstPokemonTypeName);
   };
+  // #8ADC8E
+  // #FFDE6A
+  // #FF7B2D
+
+  const returnColorBar = (value) => {
+    if (value <= 50 && value >= 30) return "#FFDE6A";
+    if (value > 50) return "#8ADC8E";
+    if (value <= 30) return "#FF7B2D";
+  };
+  const returnWidthBar = (value) => {
+    const base = 110;
+    const result = (value / base) * 100;
+    return `${result}%`;
+  };
 
   return (
     <div>
@@ -63,10 +88,30 @@ const DetailsPage = () => {
         <Detail>Detalhes</Detail>
         <DetailsContent color={cardColor()}>
           <Sprites>
-            <SpriteContent></SpriteContent>
-            <SpriteContent></SpriteContent>
+            <SpriteContent>
+              <SpriteImg src={pokemonDetails.sprites?.front_default} />
+            </SpriteContent>
+            <SpriteContent>
+              <SpriteImg src={pokemonDetails.sprites?.back_default} />
+            </SpriteContent>
           </Sprites>
-          <Stats></Stats>
+          <StatsContent>
+            Base Stats
+            {stats.map((stat, index) => {
+              return (
+                <Stats key={index}>
+                  <StatsName>{stat.stat.name.replace("-", " ")}</StatsName>
+                  <StatsNumber>{stat.base_stat}</StatsNumber>
+                  <StatsBar>
+                    <Bar
+                      color={returnColorBar(stat.base_stat)}
+                      width={returnWidthBar(stat.base_stat)}
+                    />
+                  </StatsBar>
+                </Stats>
+              );
+            })}
+          </StatsContent>
           <RightContent>
             #{pokemonDetails.id}
             <Name>{pokemonDetails.name}</Name>
@@ -84,6 +129,14 @@ const DetailsPage = () => {
                 );
               })}
             </Moves>
+            <PokebalContent src={pokebal} />
+            <PokeImage
+              src={
+                pokemonDetails.sprites?.other["official-artwork"][
+                  "front_default"
+                ]
+              }
+            />
           </RightContent>
         </DetailsContent>
       </Content>
