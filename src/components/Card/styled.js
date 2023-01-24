@@ -58,6 +58,8 @@ export const Capturar = styled.button`
   border-radius: 8px;
   background-color: #ffffff;
   border: none;
+  z-index: 999;
+  cursor: pointer;
 `;
 export const Right = styled.div`
   width: 100%;

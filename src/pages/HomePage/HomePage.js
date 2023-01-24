@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
 import Header from "../../components/Header/header";
-import { Container, ContainerCards } from "./styled";
+import { BtnContent, BtnNavigate, Container, ContainerCards } from "./styled";
 import { UserContext } from "../../context/GlobalContext";
 import Card from "../../components/Card/Card";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const context = useContext(UserContext);
   const {
     pokemon,
@@ -24,7 +26,13 @@ const HomePage = () => {
 
   return (
     <div>
-      <Header page={"home"} home={true} />
+      <Header
+        page={"home"}
+        home={true}
+        navigate={navigate}
+        context={context}
+        pokemonDetails={""}
+      />
       <Container>
         Todos Pokémons
         <ContainerCards>
@@ -32,17 +40,18 @@ const HomePage = () => {
             <div>Loading...</div>
           ) : (
             pokemon.results.map((pokemon, index) => (
-              <Card url={pokemon.url} key={index} />
+              <Card url={pokemon.url} SelectedPokemon={pokemon} key={index} />
             ))
           )}
-
-          <button onClick={handlePrevClick} disabled={prevUrl === null}>
-            Previous
-          </button>
-          <button onClick={handleNextClick} disabled={nextUrl === null}>
-            Next
-          </button>
         </ContainerCards>
+        <BtnContent>
+          <BtnNavigate onClick={handlePrevClick} disabled={prevUrl === null}>
+            Previous
+          </BtnNavigate>
+          <BtnNavigate onClick={handleNextClick} disabled={nextUrl === null}>
+            Next
+          </BtnNavigate>
+        </BtnContent>
       </Container>
     </div>
   );

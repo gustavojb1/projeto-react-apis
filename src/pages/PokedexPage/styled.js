@@ -10,25 +10,11 @@ export const Container = styled.div`
 
 export const ContainerCards = styled.div`
   margin-top: 55px;
-  height: auto;
+  height: 100vh;
   display: flex;
   flex-wrap: wrap;
   column-gap: 20px;
   row-gap: 50px;
-`;
-
-export const BtnContent = styled.div`
-  padding-top: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  column-gap: 25px;
-`;
-
-export const BtnNavigate = styled.button`
-  width: 200px;
-  height: 40px;
-  border-radius: 10px;
-  border: 0px;
-  cursor: pointer;
+  justify-items: center;
+  height: auto;
 `;

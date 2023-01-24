@@ -1,9 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getColors } from "../../utils/ReturnCardColor";
 import { getTypes } from "../../utils/ReturnTypes";
 import pokebal from "../../img/pokebal.png";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { goToPokemonDetails } from "../../routes/Coordinator";
 import {
   Capturar,
@@ -19,15 +19,19 @@ import {
   Type,
   TypeContent,
 } from "./styled";
+import { UserContext } from "../../context/GlobalContext";
 
-const Card = ({ url }) => {
+const Card = ({ url, SelectedPokemon }) => {
   const [pokemon, setPokemon] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const context = useContext(UserContext);
+  const { myPokemon, setMyPokemon } = context;
+  const location = useLocation();
 
   useEffect(() => {
     fetchPokemon();
-  }, []);
+  }, [url]);
 
   const fetchPokemon = async () => {
     try {
@@ -48,6 +52,11 @@ const Card = ({ url }) => {
     return getColors(firstPokemonTypeName);
   };
 
+  const capturar = (SelectedPokemon) => {
+    setMyPokemon([...myPokemon, SelectedPokemon]);
+    console.log(myPokemon);
+  };
+
   return (
     <CardItem color={cardColor()}>
       <Left>
@@ -62,12 +71,18 @@ const Card = ({ url }) => {
         <DetailsContent>
           <Details
             onClick={() => {
-              goToPokemonDetails(navigate, pokemon.name);
+              goToPokemonDetails(navigate, pokemon.id);
             }}
           >
             Detalhes
           </Details>
-          <Capturar>Capturar!</Capturar>
+          <Capturar
+            onClick={() => {
+              capturar(SelectedPokemon);
+            }}
+          >
+            Capturar!
+          </Capturar>
         </DetailsContent>
       </Left>
       <Right>

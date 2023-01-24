@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   HeaderContainer,
   Logo,
@@ -7,15 +7,45 @@ import {
   SpanBack,
 } from "./styled";
 import pokemonLogo from "../../img/pokemon-logo.png";
-import { NavLink } from "react-router-dom";
 
-const header = ({ page, home }) => {
+import { goToPokedex } from "../../routes/Coordinator";
+import { NavLink } from "react-router-dom";
+import { UserContext } from "../../context/GlobalContext";
+
+const header = ({ page, home, navigate, context, pokemonDetails }) => {
+  const { myPokemon, setMyPokemon } = context;
+
+  const excluirPokemon = () => {
+    const newMyPokemon = myPokemon.filter((pokemon) => {
+      return pokemon.name !== pokemonDetails.name;
+    });
+    console.log(newMyPokemon);
+    setMyPokemon(newMyPokemon);
+    goToPokedex(navigate);
+  };
+
   const renderButton = () => {
     switch (page) {
       case "home":
-        return <ButtonPokedex>Pokédex</ButtonPokedex>;
+        return (
+          <ButtonPokedex
+            onClick={() => {
+              goToPokedex(navigate);
+            }}
+          >
+            Pokédex
+          </ButtonPokedex>
+        );
       case "detail":
-        return <ButtonExcluirPokedex>Excluir da Pokedex</ButtonExcluirPokedex>;
+        return (
+          <ButtonExcluirPokedex
+            onClick={() => {
+              excluirPokemon();
+            }}
+          >
+            Excluir da Pokedex
+          </ButtonExcluirPokedex>
+        );
       case "pokedex":
         return null;
       default:
