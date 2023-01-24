@@ -5,6 +5,7 @@ export const UserContext = React.createContext();
 
 export const UserStorage = ({ children }) => {
   const [pokemon, setPokemon] = useState({});
+  const [myPokemon, setMyPokemon] = useState([]);
   const [nextUrl, setNextUrl] = useState(null);
   const [prevUrl, setPrevUrl] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -63,6 +64,8 @@ export const UserStorage = ({ children }) => {
         fetchPokemonPrev,
         nextUrl,
         prevUrl,
+        myPokemon,
+        setMyPokemon,
       }}
     >
       {children}

@@ -24,6 +24,7 @@ export const ButtonPokedex = styled.button`
   border-radius: 10px;
   border: none;
   font-size: 16px;
+  cursor: pointer;
 `;
 
 export const ButtonExcluirPokedex = styled.button`
@@ -37,6 +38,7 @@ export const ButtonExcluirPokedex = styled.button`
   border-radius: 10px;
   border: none;
   font-size: 16px;
+  cursor: pointer;
 `;
 
 export const SpanBack = styled.span`

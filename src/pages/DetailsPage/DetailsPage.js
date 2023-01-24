@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getTypes } from "../../utils/ReturnTypes";
 import Header from "../../components/Header/header";
 import { UserContext } from "../../context/GlobalContext";
@@ -31,17 +31,15 @@ import {
 
 const DetailsPage = () => {
   const context = useContext(UserContext);
-  const { pokemon } = context;
+  const navigate = useNavigate();
+  const { pokemon, myPokemon, setMyPokemon } = context;
   const location = useLocation();
   const [pokemonDetails, setPokemonDetails] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
   const stats = pokemonDetails?.stats ? pokemonDetails.stats : [];
 
-  const pokemonName = location.pathname.substring(9, location.pathname.length);
-  const pokemonSelected = pokemon.results?.filter(
-    (pokemon) => pokemon.name === pokemonName
-  );
+  const pokemonId = location.pathname.substring(9, location.pathname.length);
 
   useEffect(() => {
     // setIsLoading(true);
@@ -50,7 +48,9 @@ const DetailsPage = () => {
 
   const fetchPokemon = async () => {
     try {
-      const response = await axios.get(pokemonSelected[0].url);
+      const response = await axios.get(
+        `https://pokeapi.co/api/v2/pokemon/${pokemonId}`
+      );
       setPokemonDetails(response.data);
       //console.log(response.data);
       setIsLoading(false);
@@ -73,14 +73,19 @@ const DetailsPage = () => {
     if (value <= 30) return "#FF7B2D";
   };
   const returnWidthBar = (value) => {
-    const base = 110;
+    const base = 120;
     const result = (value / base) * 100;
     return `${result}%`;
   };
 
   return (
     <div>
-      <Header page={"detail"} />
+      <Header
+        page={"detail"}
+        context={context}
+        pokemonDetails={pokemonDetails}
+        navigate={navigate}
+      />
       <Content>
         <Detail>Detalhes</Detail>
         <DetailsContent color={cardColor()}>
