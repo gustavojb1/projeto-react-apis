@@ -4,7 +4,7 @@ import axios from "axios";
 export const UserContext = React.createContext();
 
 export const UserStorage = ({ children }) => {
-  const [pokemon, setPokemon] = useState({});
+  const [pokemon, setPokemon] = useState([]);
   const [myPokemon, setMyPokemon] = useState([]);
   const [nextUrl, setNextUrl] = useState(null);
   const [prevUrl, setPrevUrl] = useState(null);
@@ -15,11 +15,17 @@ export const UserStorage = ({ children }) => {
   useEffect(() => {
     fetchPokemon();
   }, []);
-
+  let i;
   const fetchPokemon = async () => {
     try {
       const response = await axios.get(BASE_URL);
-      setPokemon(response.data);
+
+      const newList = response.data.results;
+
+      const listOk = newList.filter(
+        (p) => !myPokemon.some((mp) => mp.name === p.name)
+      );
+      setPokemon(listOk);
       setNextUrl(response.data.next);
       setPrevUrl(response.data.previous);
       setIsLoading(false);
@@ -32,7 +38,13 @@ export const UserStorage = ({ children }) => {
   const fetchPokemonNext = async () => {
     try {
       const response = await axios.get(nextUrl);
-      setPokemon(response.data);
+
+      const newList = response.data.results;
+
+      const listOk = newList.filter(
+        (p) => !myPokemon.some((mp) => mp.name === p.name)
+      );
+      setPokemon(listOk);
       setNextUrl(response.data.next);
       setPrevUrl(response.data.previous);
       setIsLoading(false);
@@ -45,7 +57,13 @@ export const UserStorage = ({ children }) => {
   const fetchPokemonPrev = async () => {
     try {
       const response = await axios.get(prevUrl);
-      setPokemon(response.data);
+
+      const newList = response.data.results;
+
+      const listOk = newList.filter(
+        (p) => !myPokemon.some((mp) => mp.name === p.name)
+      );
+      setPokemon(listOk);
       setNextUrl(response.data.next);
       setPrevUrl(response.data.previous);
       setIsLoading(false);
@@ -59,6 +77,7 @@ export const UserStorage = ({ children }) => {
     <UserContext.Provider
       value={{
         pokemon,
+        setPokemon,
         isLoading,
         fetchPokemonNext,
         fetchPokemonPrev,

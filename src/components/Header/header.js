@@ -5,10 +5,11 @@ import {
   ButtonPokedex,
   ButtonExcluirPokedex,
   SpanBack,
+  ButtonExcluirPokedex2,
 } from "./styled";
 import pokemonLogo from "../../img/pokemon-logo.png";
 
-import { goToPokedex } from "../../routes/Coordinator";
+import { goToHome, goToPokedex } from "../../routes/Coordinator";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "../../context/GlobalContext";
 
@@ -19,9 +20,8 @@ const header = ({ page, home, navigate, context, pokemonDetails }) => {
     const newMyPokemon = myPokemon.filter((pokemon) => {
       return pokemon.name !== pokemonDetails.name;
     });
-    console.log(newMyPokemon);
     setMyPokemon(newMyPokemon);
-    goToPokedex(navigate);
+    goToHome(navigate);
   };
 
   const renderButton = () => {
@@ -37,15 +37,22 @@ const header = ({ page, home, navigate, context, pokemonDetails }) => {
           </ButtonPokedex>
         );
       case "detail":
-        return (
-          <ButtonExcluirPokedex
-            onClick={() => {
-              excluirPokemon();
-            }}
-          >
-            Excluir da Pokedex
-          </ButtonExcluirPokedex>
-        );
+        if (!myPokemon.some((poke) => poke.name === pokemonDetails.name)) {
+          return (
+            <ButtonExcluirPokedex2>Pokémon não capturado</ButtonExcluirPokedex2>
+          );
+        } else {
+          return (
+            <ButtonExcluirPokedex
+              onClick={() => {
+                excluirPokemon();
+              }}
+            >
+              Excluir da Pokedex
+            </ButtonExcluirPokedex>
+          );
+        }
+
       case "pokedex":
         return null;
       default:

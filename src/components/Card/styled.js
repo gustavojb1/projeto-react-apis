@@ -11,6 +11,36 @@ export const CardItem = styled.div`
   background-color: ${(props) => props.color};
 `;
 
+export const Loading = styled.div`
+  display: flex;
+  height: 210px;
+  width: 440px;
+  background-color: #eeeeee;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Loader = styled.span`
+  width: 48px;
+  height: 48px;
+  border: 8px solid #404258;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
 export const Left = styled.div`
   display: flex;
   flex-direction: column;
@@ -19,8 +49,11 @@ export const Left = styled.div`
   position: relative;
 `;
 
-export const Id = styled.span``;
+export const Id = styled.span`
+  color: #ffffff;
+`;
 export const Name = styled.span`
+  color: #ffffff;
   font-size: 32px;
   &::first-letter {
     text-transform: uppercase;
@@ -58,7 +91,17 @@ export const Capturar = styled.button`
   border-radius: 8px;
   background-color: #ffffff;
   border: none;
-  z-index: 999;
+  z-index: 3;
+  cursor: pointer;
+`;
+export const Excluir = styled.button`
+  width: 146px;
+  height: 38px;
+  border-radius: 8px;
+  background-color: #ff6262;
+  color: #ffffff;
+  border: none;
+  z-index: 3;
   cursor: pointer;
 `;
 export const Right = styled.div`

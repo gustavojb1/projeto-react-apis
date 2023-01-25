@@ -1,6 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Header from "../../components/Header/header";
-import { BtnContent, BtnNavigate, Container, ContainerCards } from "./styled";
+import {
+  BtnContent,
+  BtnNavigate,
+  Container,
+  ContainerCards,
+  Modal,
+  ModalContent,
+  Text,
+  Title,
+} from "./styled";
 import { UserContext } from "../../context/GlobalContext";
 import Card from "../../components/Card/Card";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 const HomePage = () => {
   const navigate = useNavigate();
   const context = useContext(UserContext);
+  const [modal, setModal] = useState("hidden");
   const {
     pokemon,
     isLoading,
@@ -25,7 +35,18 @@ const HomePage = () => {
   };
 
   return (
-    <div>
+    <>
+      <ModalContent
+        visibility={modal}
+        onClick={() => {
+          setModal("hidden");
+        }}
+      >
+        <Modal>
+          <Title>Gotcha!</Title>
+          <Text>O Pokémon foi adicionado na sua Pokédex</Text>
+        </Modal>
+      </ModalContent>
       <Header
         page={"home"}
         home={true}
@@ -36,13 +57,14 @@ const HomePage = () => {
       <Container>
         Todos Pokémons
         <ContainerCards>
-          {isLoading ? (
-            <div>Loading...</div>
-          ) : (
-            pokemon.results.map((pokemon, index) => (
-              <Card url={pokemon.url} SelectedPokemon={pokemon} key={index} />
-            ))
-          )}
+          {pokemon.map((pokemon, index) => (
+            <Card
+              url={pokemon.url}
+              SelectedPokemon={pokemon}
+              key={index}
+              setModal={setModal}
+            />
+          ))}
         </ContainerCards>
         <BtnContent>
           <BtnNavigate onClick={handlePrevClick} disabled={prevUrl === null}>
@@ -53,7 +75,7 @@ const HomePage = () => {
           </BtnNavigate>
         </BtnContent>
       </Container>
-    </div>
+    </>
   );
 };
 
