@@ -41,6 +41,19 @@ export const ButtonExcluirPokedex = styled.button`
   cursor: pointer;
 `;
 
+export const ButtonExcluirPokedex2 = styled.button`
+  width: 226px;
+  height: 57px;
+  position: absolute;
+  right: 40px;
+  top: 51px;
+  background-color: #ff6262;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+`;
+
 export const SpanBack = styled.span`
   position: absolute;
   left: 100px;

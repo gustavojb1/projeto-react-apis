@@ -10,8 +10,11 @@ import {
   CardItem,
   Details,
   DetailsContent,
+  Excluir,
   Id,
   Left,
+  Loader,
+  Loading,
   Name,
   PokebalContent,
   PokeImage,
@@ -21,12 +24,14 @@ import {
 } from "./styled";
 import { UserContext } from "../../context/GlobalContext";
 
-const Card = ({ url, SelectedPokemon }) => {
+const Card = ({ url, SelectedPokemon, setModal }) => {
   const [pokemon, setPokemon] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const context = useContext(UserContext);
   const { myPokemon, setMyPokemon } = context;
+  const pokemonHome = context;
+
   const location = useLocation();
 
   useEffect(() => {
@@ -54,28 +59,29 @@ const Card = ({ url, SelectedPokemon }) => {
 
   const capturar = (SelectedPokemon) => {
     setMyPokemon([...myPokemon, SelectedPokemon]);
-    console.log(myPokemon);
+
+    const newPokemon = pokemonHome.pokemon.filter((poke) => {
+      return poke.name !== pokemon.name;
+    });
+
+    pokemonHome.setPokemon(newPokemon);
+
+    // setModal("visible");
   };
 
-  return (
-    <CardItem color={cardColor()}>
-      <Left>
-        <Id>#{pokemon.id}</Id>
-        <Name>{pokemon.name}</Name>
-        <TypeContent>
-          {pokemon.types?.map((pokemonType, index) => {
-            const imageTypeLink = getTypes(pokemonType.type.name);
-            return <Type key={index} src={imageTypeLink} alt="" />;
-          })}
-        </TypeContent>
-        <DetailsContent>
-          <Details
-            onClick={() => {
-              goToPokemonDetails(navigate, pokemon.id);
-            }}
-          >
-            Detalhes
-          </Details>
+  const excluirPokemon = (SelectedPokemon) => {
+    const newMyPokemon = myPokemon.filter((poke) => {
+      return poke.name !== pokemon.name;
+    });
+    setMyPokemon(newMyPokemon);
+
+    pokemonHome.setPokemon([...pokemonHome.pokemon, SelectedPokemon]);
+  };
+
+  const renderCapturarButton = () => {
+    switch (location.pathname) {
+      case "/":
+        return (
           <Capturar
             onClick={() => {
               capturar(SelectedPokemon);
@@ -83,15 +89,59 @@ const Card = ({ url, SelectedPokemon }) => {
           >
             Capturar!
           </Capturar>
-        </DetailsContent>
-      </Left>
-      <Right>
-        <PokeImage
-          src={pokemon.sprites?.other["official-artwork"]["front_default"]}
-        />
-        <PokebalContent src={pokebal} />
-      </Right>
-    </CardItem>
+        );
+      case "/pokedex":
+        return (
+          <Excluir
+            onClick={() => {
+              excluirPokemon(SelectedPokemon);
+            }}
+          >
+            Excluir
+          </Excluir>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <>
+      {isLoading ? (
+        <Loading>
+          <Loader />
+        </Loading>
+      ) : (
+        <CardItem color={cardColor()}>
+          <Left>
+            <Id>#{pokemon.id}</Id>
+            <Name>{pokemon.name}</Name>
+            <TypeContent>
+              {pokemon.types?.map((pokemonType, index) => {
+                const imageTypeLink = getTypes(pokemonType.type.name);
+                return <Type key={index} src={imageTypeLink} alt="" />;
+              })}
+            </TypeContent>
+            <DetailsContent>
+              <Details
+                onClick={() => {
+                  goToPokemonDetails(navigate, pokemon.id);
+                }}
+              >
+                Detalhes
+              </Details>
+              {renderCapturarButton()}
+            </DetailsContent>
+          </Left>
+          <Right>
+            <PokeImage
+              src={pokemon.sprites?.other["official-artwork"]["front_default"]}
+            />
+            <PokebalContent src={pokebal} />
+          </Right>
+        </CardItem>
+      )}
+    </>
   );
 };
 

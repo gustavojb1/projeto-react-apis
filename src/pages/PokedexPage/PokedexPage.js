@@ -20,7 +20,7 @@ const PokedexPage = () => {
       <Container>
         <ContainerCards>
           {myPokemon.map((pokemon, index) => (
-            <Card url={pokemon.url} key={index} />
+            <Card url={pokemon.url} key={index} SelectedPokemon={pokemon} />
           ))}
         </ContainerCards>
       </Container>
