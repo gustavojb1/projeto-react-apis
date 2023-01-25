@@ -27,7 +27,7 @@ import { UserContext } from "../../context/GlobalContext";
 
 const Card = ({ url, SelectedPokemon, setModal }) => {
   const [pokemon, setPokemon] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const context = useContext(UserContext);
   const { myPokemon, setMyPokemon } = context;
@@ -41,6 +41,7 @@ const Card = ({ url, SelectedPokemon, setModal }) => {
 
   const fetchPokemon = async () => {
     try {
+      setIsLoading(true);
       const response = await axios.get(url);
       setPokemon(response.data);
       //console.log(response.data);
