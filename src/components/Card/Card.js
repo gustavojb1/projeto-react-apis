@@ -5,6 +5,7 @@ import { getTypes } from "../../utils/ReturnTypes";
 import pokebal from "../../img/pokebal.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import { goToPokemonDetails } from "../../routes/Coordinator";
+import Tilty from "react-tilty";
 import {
   Capturar,
   CardItem,
@@ -112,34 +113,38 @@ const Card = ({ url, SelectedPokemon, setModal }) => {
           <Loader />
         </Loading>
       ) : (
-        <CardItem color={cardColor()}>
-          <Left>
-            <Id>#{pokemon.id}</Id>
-            <Name>{pokemon.name}</Name>
-            <TypeContent>
-              {pokemon.types?.map((pokemonType, index) => {
-                const imageTypeLink = getTypes(pokemonType.type.name);
-                return <Type key={index} src={imageTypeLink} alt="" />;
-              })}
-            </TypeContent>
-            <DetailsContent>
-              <Details
-                onClick={() => {
-                  goToPokemonDetails(navigate, pokemon.id);
-                }}
-              >
-                Detalhes
-              </Details>
-              {renderCapturarButton()}
-            </DetailsContent>
-          </Left>
-          <Right>
-            <PokeImage
-              src={pokemon.sprites?.other["official-artwork"]["front_default"]}
-            />
-            <PokebalContent src={pokebal} />
-          </Right>
-        </CardItem>
+        <Tilty>
+          <CardItem color={cardColor()}>
+            <Left>
+              <Id>#{pokemon.id}</Id>
+              <Name>{pokemon.name}</Name>
+              <TypeContent>
+                {pokemon.types?.map((pokemonType, index) => {
+                  const imageTypeLink = getTypes(pokemonType.type.name);
+                  return <Type key={index} src={imageTypeLink} alt="" />;
+                })}
+              </TypeContent>
+              <DetailsContent>
+                <Details
+                  onClick={() => {
+                    goToPokemonDetails(navigate, pokemon.id);
+                  }}
+                >
+                  Detalhes
+                </Details>
+                {renderCapturarButton()}
+              </DetailsContent>
+            </Left>
+            <Right>
+              <PokeImage
+                src={
+                  pokemon.sprites?.other["official-artwork"]["front_default"]
+                }
+              />
+              <PokebalContent src={pokebal} />
+            </Right>
+          </CardItem>
+        </Tilty>
       )}
     </>
   );
