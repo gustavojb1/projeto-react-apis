@@ -66,7 +66,7 @@ const Card = ({ url, SelectedPokemon, setModal }) => {
 
     pokemonHome.setPokemon(newPokemon);
 
-    // setModal("visible");
+    setModal("visible");
   };
 
   const excluirPokemon = (SelectedPokemon) => {
