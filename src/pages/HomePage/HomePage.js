@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import Header from "../../components/Header/header";
+import Tilt from "react-parallax-tilt";
 import {
   BtnContent,
   BtnNavigate,
@@ -58,12 +59,14 @@ const HomePage = () => {
         Todos Pokémons
         <ContainerCards>
           {pokemon.map((pokemon, index) => (
-            <Card
-              url={pokemon.url}
-              SelectedPokemon={pokemon}
-              key={index}
-              setModal={setModal}
-            />
+            <Tilt>
+              <Card
+                url={pokemon.url}
+                SelectedPokemon={pokemon}
+                key={index}
+                setModal={setModal}
+              />
+            </Tilt>
           ))}
         </ContainerCards>
         <BtnContent>

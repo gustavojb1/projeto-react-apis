@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import Tilt from "react-parallax-tilt";
 import Card from "../../components/Card/Card";
 import Header from "../../components/Header/header";
 import { UserContext } from "../../context/GlobalContext";
@@ -20,7 +21,9 @@ const PokedexPage = () => {
       <Container>
         <ContainerCards>
           {myPokemon.map((pokemon, index) => (
-            <Card url={pokemon.url} key={index} SelectedPokemon={pokemon} />
+            <Tilt>
+              <Card url={pokemon.url} key={index} SelectedPokemon={pokemon} />
+            </Tilt>
           ))}
         </ContainerCards>
       </Container>

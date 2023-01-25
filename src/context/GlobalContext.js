@@ -15,7 +15,7 @@ export const UserStorage = ({ children }) => {
   useEffect(() => {
     fetchPokemon();
   }, []);
-  let i;
+
   const fetchPokemon = async () => {
     try {
       const response = await axios.get(BASE_URL);
