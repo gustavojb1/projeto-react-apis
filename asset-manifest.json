@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/projeto-react-apis/static/css/main.a3f15609.css",
+    "main.js": "/projeto-react-apis/static/js/main.8681db2c.js",
+    "static/media/pokemon-logo.png": "/projeto-react-apis/static/media/pokemon-logo.5c7c95f2d4fd0bcb6050.png",
+    "static/media/pokebal.png": "/projeto-react-apis/static/media/pokebal.3afadfe4fa9026ba039e.png",
+    "index.html": "/projeto-react-apis/index.html",
+    "main.a3f15609.css.map": "/projeto-react-apis/static/css/main.a3f15609.css.map",
+    "main.8681db2c.js.map": "/projeto-react-apis/static/js/main.8681db2c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a3f15609.css",
+    "static/js/main.8681db2c.js"
+  ]
+}
